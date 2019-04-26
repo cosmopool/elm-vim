@@ -127,7 +127,7 @@ endf
 function! elm#Syntastic(input) abort
 	let l:fixes = []
 
-	let l:bin = 'elm-make'
+	let l:bin = 'elm make'
 	let l:format = '--report=json'
 	let l:input = shellescape(a:input)
 	let l:output = '--output=' . shellescape(syntastic#util#DevNull())
@@ -162,7 +162,7 @@ function! elm#Build(input, output, show_warnings) abort
 	let l:fixes = []
 	let l:rawlines = []
 
-	let l:bin = 'elm-make'
+	let l:bin = 'elm make'
 	let l:format = '--report=json'
 	let l:input = shellescape(a:input)
 	let l:output = '--output=' . shellescape(a:output)
@@ -212,11 +212,11 @@ endf
 
 " Make the given file, or the current file if none is given.
 function! elm#Make(...) abort
-	if elm#util#CheckBin('elm-make', 'http://elm-lang.org/install') ==# ''
+	if elm#util#CheckBin('elm make', 'http://elm-lang.org/install') ==# ''
 		return
 	endif
 
-	call elm#util#Echo('elm-make:', 'building...')
+	call elm#util#Echo('elm make:', 'building...')
 
 	let l:input = (a:0 == 0) ? expand('%:p') : a:1
 	let l:fixes = elm#Build(l:input, g:elm_make_output_file, g:elm_make_show_warnings)
@@ -256,15 +256,15 @@ endf
 
 " Open the elm repl in a subprocess.
 function! elm#Repl() abort
-	" check for the elm-repl binary
-	if elm#util#CheckBin('elm-repl', 'http://elm-lang.org/install') ==# ''
+	" check for the elm repl binary
+	if elm#util#CheckBin('elm repl', 'http://elm-lang.org/install') ==# ''
 		return
 	endif
 
 	if has('nvim')
-		term('elm-repl')
+		term('elm repl')
 	else
-		!elm-repl
+		!elm repl
 	endif
 endf
 
