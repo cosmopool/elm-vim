@@ -238,6 +238,51 @@ function! elm#Make(...) abort
 	endif
 endf
 
+" Open the elm reactor in a subprocess.
+function! elm#Reactor#Open() abort
+	" check for the elm reactor binary
+	if elm#util#CheckBin('elm reactor', 'http://elm-lang.org/install') ==# ''
+		return
+	endif
+
+	if has('nvim')
+		term('elm reactor')
+	else
+		!elm reactor
+	endif
+endf
+
+" Make the given file, or the current file if none is given and execute ELM REACTOR.
+function! elm#Reactor(...) abort
+	if elm#util#CheckBin('elm make', 'http://elm-lang.org/install') ==# ''
+		return
+	endif
+
+	call elm#util#Echo('elm make:', 'building...')
+
+	let l:input = (a:0 == 0) ? expand('%:p') : a:1
+	let l:fixes = elm#Build(l:input, g:elm_make_output_file, g:elm_make_show_warnings)
+
+	if len(l:fixes) > 0
+		call elm#util#EchoWarning('', 'found ' . len(l:fixes) . ' errors')
+
+		call setqflist(l:fixes, 'r')
+		cwindow
+
+		if get(g:, 'elm_jump_to_error', 1)
+			ll 1
+		endif
+	else
+		call elm#util#EchoSuccess('', 'Sucessfully compiled')
+
+		call setqflist([])
+		cwindow
+		
+		" open elm reactor
+		call elm#Reactor#Open()
+	endif
+endf
+
 " Show the detail of the current error in the quickfix window.
 function! elm#ErrorDetail() abort
 	if !empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") ==? "quickfix"'))
