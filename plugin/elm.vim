@@ -7,6 +7,8 @@ let g:loaded_elm = 1
 " Mappings
 nnoremap <silent> <Plug>(elm-make) :<C-u>call elm#Make()<CR>
 nnoremap <silent> <Plug>(elm-make-main) :<C-u>call elm#Make("Main.elm")<CR>
+nnoremap <silent> <Plug>(elm-reactor-main) :<C-u>call elm#Reactor("Main.elm")<CR>
+nnoremap <silent> <Plug>(elm-reactor) :<C-u>call elm#Reactor()<CR>
 nnoremap <silent> <Plug>(elm-test) :<C-u>call elm#Test()<CR>
 nnoremap <silent> <Plug>(elm-repl) :<C-u>call elm#Repl()<CR>
 nnoremap <silent> <Plug>(elm-error-detail) :<C-u>call elm#ErrorDetail()<CR>
