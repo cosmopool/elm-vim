@@ -43,6 +43,8 @@ setlocal commentstring=--\ %s
 " Commands
 command -buffer -nargs=? -complete=file ElmMake call elm#Make(<f-args>)
 command -buffer ElmMakeMain call elm#Make("Main.elm")
+command -buffer ElmReactor call elm#Reactor(<f-args>)
+command -buffer ElmReactorMain call elm#Reactor("Main.elm")
 command -buffer -nargs=? -complete=file ElmTest call elm#Test(<f-args>)
 command -buffer ElmRepl call elm#Repl()
 command -buffer ElmErrorDetail call elm#ErrorDetail()
@@ -54,6 +56,8 @@ command -buffer ElmFormat call elm#Format()
 let b:undo_ftplugin = "
       \ delcommand ElmMake
       \|delcommand ElmMakeMain
+      \|delcommand ElmReactor
+      \|delcommand ElmReactorMain
       \|delcommand ElmTest
       \|delcommand ElmRepl
       \|delcommand ElmErrorDetail
@@ -65,6 +69,8 @@ let b:undo_ftplugin = "
 if get(g:, 'elm_setup_keybindings', 1)
   nmap <buffer> <LocalLeader>m <Plug>(elm-make)
   nmap <buffer> <LocalLeader>b <Plug>(elm-make-main)
+  nmap <buffer> <LocalLeader>m <Plug>(elm-reactor)
+  nmap <buffer> <LocalLeader>m <Plug>(elm-reactor-main)
   nmap <buffer> <LocalLeader>t <Plug>(elm-test)
   nmap <buffer> <LocalLeader>r <Plug>(elm-repl)
   nmap <buffer> <LocalLeader>e <Plug>(elm-error-detail)
